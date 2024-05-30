@@ -1,20 +1,38 @@
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../Router/Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Nav = () => {
    const [theme, setTheme] = useState("light");
    const { user, logOut } = useContext(AuthContext);
 
-   const handleLogOut = () =>{
-      logOut().then(result =>{
-         console.log(result.user);
-      })
-      .catch(error =>{
-         console.log(error);
-      })
-   }
-  
+   const handleLogOut = () => {
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be log Out!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes,LogOut",
+      }).then((result) => {
+         if (result.isConfirmed) {
+            logOut()
+               .then((result) => {
+                  console.log(result.user);
+               })
+               .catch((error) => {
+                  console.log(error);
+               });
+            Swal.fire({
+               title: "LogOut!",
+               text: "You logOut this site.",
+               icon: "success",
+            });
+         }
+      });
+   };
 
    const handleThemeToggle = (e) => {
       if (e.target.checked) {
@@ -49,7 +67,7 @@ const Nav = () => {
                </NavLink>
                <div>
                   {user ? (
-                     <NavLink to={"/logIn"} onClick={handleLogOut} className={({ isActive }) => (isActive ? "text-primary underline font-bold" : "font-bold")}>
+                     <NavLink onClick={handleLogOut} className={"font-bold"}>
                         LogOut
                      </NavLink>
                   ) : (
