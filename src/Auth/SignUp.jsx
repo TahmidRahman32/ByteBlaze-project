@@ -1,27 +1,38 @@
 import { useContext } from "react";
 import { AuthContext } from "../Router/Provider/AuthProvider";
 import { Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { FaInstagram } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 
 const SignUp = () => {
+   const { createUser, SignUpGoogle } = useContext(AuthContext);
+   const handleSubmitSignUp = (e) => {
+      e.preventDefault();
+      const from = e.target;
+      const name = from.name.value;
+      const email = from.email.value;
+      const password = from.password.value;
+      console.log(name, email, password);
 
-   const {createUser} = useContext(AuthContext);
-     const handleSubmitSignUp = (e) => {
-        e.preventDefault();
-        const from = e.target;
-        const name = from.name.value;
-        const email = from.email.value;
-        const password = from.password.value;
-        console.log(name,email, password);
+      createUser(email, password)
+         .then((result) => {
+            console.log(result.user);
+         })
+         .catch((error) => {
+            console.log(error);
+         });
+   };
 
-        createUser(email, password)
-        .then(result =>{
-         console.log(result.user);
-        })
-        .catch(error =>{
-         console.log(error);
-        })
-        
-     };
+   const handleGoogleBtn = () => {
+      SignUpGoogle()
+         .then((result) => {
+            console.log(result.user);
+         })
+         .catch((error) => {
+            console.log(error);
+         });
+   };
    return (
       <div className="hero min-h-[calc(100vh-130px)] bg-base-200">
          <div className="hero-content flex-col">
@@ -63,6 +74,18 @@ const SignUp = () => {
                            <Link to={"/logIn"}>SignIn</Link>
                         </span>{" "}
                      </small>
+                  </div>
+                  <div className="flex justify-center gap-3 text-2xl my-3">
+                     <span onClick={handleGoogleBtn}>
+                        {" "}
+                        <FcGoogle></FcGoogle>{" "}
+                     </span>
+                     <span>
+                        <FaInstagram></FaInstagram>
+                     </span>
+                     <span>
+                        <FaGithub></FaGithub>
+                     </span>
                   </div>
                </form>
             </div>
