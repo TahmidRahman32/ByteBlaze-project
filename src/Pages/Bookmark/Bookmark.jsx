@@ -18,7 +18,7 @@ const Bookmark = () => {
    };
    if (bookmarks.length === 0)return <NotAvailable />
    return (
-      <div className="grid grid-cols-4 gap-8 my-8 justify-start items-center mx-8">
+      <div className="grid md:grid-cols-4 gap-8 my-8 justify-start items-center mx-8">
          {bookmarks.map((book) => (
             <BookmarkCard key={book.id} deletable={true} bookmark={book} handleDelete={handleDelete}></BookmarkCard>
          ))}

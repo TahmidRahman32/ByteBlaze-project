@@ -1,8 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../Router/Provider/AuthProvider";
 
 const Nav = () => {
    const [theme, setTheme] = useState("light");
+   const { user, logOut } = useContext(AuthContext);
+
+   const handleLogOut = () =>{
+      logOut().then(result =>{
+         console.log(result.user);
+      })
+      .catch(error =>{
+         console.log(error);
+      })
+   }
+  
+
    const handleThemeToggle = (e) => {
       if (e.target.checked) {
          setTheme("dark");
@@ -19,7 +32,7 @@ const Nav = () => {
    return (
       <div className="navbar bg-base-100 fixed shadow-lg z-10">
          <div className="flex-1">
-            <a className="btn btn-ghost gap-0 text-secondary font-bold text-2xl">
+            <a className="btn btn-ghost gap-0 text-secondary font-bold md:text-2xl">
                Byte <span className="text-primary">Blaze</span>
             </a>
          </div>
@@ -33,6 +46,20 @@ const Nav = () => {
                </NavLink>
                <NavLink to={"/bookmark"} className={({ isActive }) => (isActive ? "text-primary underline font-bold" : "font-bold")}>
                   BookMarks
+               </NavLink>
+               <div>
+                  {user ? (
+                     <NavLink to={"/logIn"} onClick={handleLogOut} className={({ isActive }) => (isActive ? "text-primary underline font-bold" : "font-bold")}>
+                        LogOut
+                     </NavLink>
+                  ) : (
+                     <NavLink to={"/logIn"} className={({ isActive }) => (isActive ? "text-primary underline font-bold" : "font-bold")}>
+                        LogIn
+                     </NavLink>
+                  )}
+               </div>
+               <NavLink to={"/signUp"} className={({ isActive }) => (isActive ? "text-primary underline font-bold" : "font-bold")}>
+                  SignUp
                </NavLink>
 
                <li>

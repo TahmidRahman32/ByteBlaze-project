@@ -7,6 +7,9 @@ import BlogDetails from "../Pages/Blogs/BlogDetails";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Content from "../Pages/Blogs/content/Content";
 import Author from "../Pages/Blogs/content/Author";
+import Login from "../Auth/Login";
+import SignUp from "../Auth/SignUp";
+import PrivateRoute from "./PrivateRoute";
 const router = createBrowserRouter([
    {
       path: "/",
@@ -19,7 +22,11 @@ const router = createBrowserRouter([
          },
          {
             path: "/blogs",
-            element: <Blogs></Blogs>,
+            element: (
+               <PrivateRoute>
+                  <Blogs></Blogs>
+               </PrivateRoute>
+            ),
             loader: () => fetch("https://dev.to/api/articles?per_page=20&top=7"),
          },
          {
@@ -41,7 +48,19 @@ const router = createBrowserRouter([
          },
          {
             path: "/bookmark",
-            element: <Bookmark></Bookmark>,
+            element: (
+               <PrivateRoute>
+                  <Bookmark></Bookmark>
+               </PrivateRoute>
+            ),
+         },
+         {
+            path: "/logIn",
+            element: <Login />,
+         },
+         {
+            path: "/signUp",
+            element: <SignUp></SignUp>,
          },
       ],
    },

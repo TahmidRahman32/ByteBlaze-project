@@ -6,7 +6,7 @@ import  { Toaster } from "react-hot-toast";
 const Root = () => {
    return (
       <div>
-         <div className="h-[78px]">
+         <div className="h-[70px]">
             <Nav></Nav>
          </div>
          <div className="min-h-[calc(100vh-133px)]">
